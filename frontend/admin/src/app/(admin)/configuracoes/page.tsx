@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getSettings, updateStoreInfo, updateTheme, updatePaymentConfig, updateWhatsApp, updateDomain } from '@/lib/api';
 import type { StoreConfig, StoreTheme, PaymentConfig } from '@/types';
 import { Store, Palette, CreditCard, MessageCircle, Globe, Loader2, Save, CheckCircle2 } from 'lucide-react';
+import SingleImageUploader from '@/components/SingleImageUploader';
 
 type Tab = 'store' | 'theme' | 'payments' | 'whatsapp' | 'domain';
 
@@ -137,8 +138,8 @@ export default function SettingsPage() {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${activeTab === tab.id
-                                    ? 'bg-indigo-500/15 text-indigo-400'
-                                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
+                                ? 'bg-indigo-500/15 text-indigo-400'
+                                : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
                                 }`}
                         >
                             <Icon className="w-4 h-4" />
@@ -163,8 +164,12 @@ export default function SettingsPage() {
                             <input id="store-email" type="email" value={storeForm.email} onChange={(e) => setStoreForm({ ...storeForm, email: e.target.value })} />
                         </div>
                         <div>
-                            <label htmlFor="store-logo">URL do Logo</label>
-                            <input id="store-logo" type="url" value={storeForm.logo_url} onChange={(e) => setStoreForm({ ...storeForm, logo_url: e.target.value })} placeholder="https://..." />
+                            <SingleImageUploader
+                                value={storeForm.logo_url}
+                                onChange={(url) => setStoreForm({ ...storeForm, logo_url: url })}
+                                folder="logos"
+                                label="Logo da Loja"
+                            />
                         </div>
                         <SaveButton saving={saving} />
                     </form>

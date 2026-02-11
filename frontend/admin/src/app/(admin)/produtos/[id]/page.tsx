@@ -6,6 +6,7 @@ import { getProduct, updateProduct, getCategories } from '@/lib/api';
 import type { Category, ProductFormData } from '@/types';
 import { ArrowLeft, Loader2, Save } from 'lucide-react';
 import Link from 'next/link';
+import ImageUploader from '@/components/ImageUploader';
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
@@ -145,6 +146,13 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                         <label htmlFor="description">Descrição</label>
                         <textarea id="description" name="description" rows={4} value={form.description || ''} onChange={handleChange} />
                     </div>
+
+                    <div className="md:col-span-2">
+                        <ImageUploader
+                            images={form.images || []}
+                            onChange={(imgs) => setForm((prev) => ({ ...prev, images: imgs }))}
+                        />
+                    </div>
                 </div>
 
                 <div className="flex justify-end pt-2">
@@ -161,3 +169,4 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         </div>
     );
 }
+

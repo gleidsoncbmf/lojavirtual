@@ -42,6 +42,45 @@ class WhatsAppService
             $lines[] = "📱 *Telefone:* {$order->customer_phone}";
         }
 
+        // Shipping address
+        $address = $order->shipping_address;
+        if (is_array($address) && !empty(array_filter($address))) {
+            $lines[] = "";
+            $lines[] = "📍 *Endereço de entrega:*";
+
+            $addressParts = [];
+            if (!empty($address['street'])) {
+                $streetLine = $address['street'];
+                if (!empty($address['number'])) {
+                    $streetLine .= ", {$address['number']}";
+                }
+                $addressParts[] = $streetLine;
+            }
+            if (!empty($address['complement'])) {
+                $addressParts[] = $address['complement'];
+            }
+            if (!empty($address['neighborhood'])) {
+                $addressParts[] = $address['neighborhood'];
+            }
+            $cityState = [];
+            if (!empty($address['city'])) {
+                $cityState[] = $address['city'];
+            }
+            if (!empty($address['state'])) {
+                $cityState[] = $address['state'];
+            }
+            if (!empty($cityState)) {
+                $addressParts[] = implode(' - ', $cityState);
+            }
+            if (!empty($address['zip'])) {
+                $addressParts[] = "CEP: {$address['zip']}";
+            }
+
+            foreach ($addressParts as $part) {
+                $lines[] = "  {$part}";
+            }
+        }
+
         $lines[] = "";
         $lines[] = "📦 *Produtos:*";
 
@@ -64,6 +103,12 @@ class WhatsAppService
             $lines[] = "";
             $lines[] = "📝 *Observações:* {$order->notes}";
         }
+
+        // Order tracking link
+        $frontendUrl = env('FRONTEND_STORE_URL', 'http://localhost:3000');
+        $lines[] = "";
+        $lines[] = "🔗 *Acompanhar pedido:*";
+        $lines[] = "{$frontendUrl}/{$store->slug}/pedido/{$order->order_number}";
 
         return implode("\n", $lines);
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\ThemeController;
 use App\Http\Controllers\Api\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Api\Admin\DashboardController;
+use App\Http\Controllers\Api\Admin\ImageUploadController;
 use App\Http\Controllers\Api\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\Admin\SettingsController;
@@ -88,6 +89,9 @@ Route::prefix('admin')
 
         // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index']);
+
+        // Image Upload
+        Route::post('/upload-images', [ImageUploadController::class, 'upload']);
 
         // Products CRUD
         Route::get('/products', [AdminProductController::class, 'index']);

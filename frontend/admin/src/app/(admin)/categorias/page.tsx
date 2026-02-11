@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { getCategories, createCategory, updateCategory, deleteCategory } from '@/lib/api';
 import type { Category, CategoryFormData } from '@/types';
 import { FolderOpen, Plus, Pencil, Trash2, X, Loader2, Save } from 'lucide-react';
+import SingleImageUploader from '@/components/SingleImageUploader';
 
 export default function CategoriesPage() {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -141,8 +142,12 @@ export default function CategoriesPage() {
                                 <input id="sort_order" name="sort_order" type="number" min="0" value={form.sort_order || 0} onChange={handleChange} />
                             </div>
                             <div>
-                                <label htmlFor="image_url">URL da Imagem</label>
-                                <input id="image_url" name="image_url" type="url" value={form.image_url || ''} onChange={handleChange} placeholder="https://..." />
+                                <SingleImageUploader
+                                    value={form.image_url || ''}
+                                    onChange={(url) => setForm((prev) => ({ ...prev, image_url: url }))}
+                                    folder="categories"
+                                    label="Imagem da Categoria"
+                                />
                             </div>
                             <div>
                                 <label htmlFor="cat-active">Status</label>

@@ -24,19 +24,7 @@ class OrderController extends Controller
         }
 
         return response()->json([
-            'data' => [
-                'order_number' => $order->order_number,
-                'payment_status' => $order->payment_status,
-                'delivery_status' => $order->delivery_status,
-                'total' => (float) $order->total,
-                'items' => $order->items->map(fn($item) => [
-                    'product_name' => $item->product_name,
-                    'quantity' => $item->quantity,
-                    'total' => (float) $item->total,
-                ]),
-                'status_history' => $order->status_history ?? [],
-                'created_at' => $order->created_at?->toISOString(),
-            ],
+            'data' => new OrderResource($order),
         ]);
     }
 }

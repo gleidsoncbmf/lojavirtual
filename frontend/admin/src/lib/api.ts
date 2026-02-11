@@ -21,17 +21,42 @@ import type {
 } from '@/types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000';
 
 const api = axios.create({
     baseURL: API_BASE,
+    withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
     },
 });
 
-// Interceptor: attach Bearer token
-api.interceptors.request.use((config) => {
+// ---- CSRF cookie initialization ----
+let csrfInitialized = false;
+
+async function ensureCsrf(): Promise<void> {
+    if (csrfInitialized) return;
+    await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, { withCredentials: true });
+    csrfInitialized = true;
+}
+
+// Interceptor: ensure CSRF cookie before mutating requests
+api.interceptors.request.use(async (config) => {
+    const method = (config.method ?? '').toLowerCase();
+    if (['post', 'put', 'patch', 'delete'].includes(method)) {
+        await ensureCsrf();
+    }
+
+    // Read the XSRF-TOKEN cookie and set it as a header
+    if (typeof document !== 'undefined') {
+        const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+        if (match) {
+            config.headers['X-XSRF-TOKEN'] = decodeURIComponent(match[1]);
+        }
+    }
+
+    // Attach Bearer token if available
     if (typeof window !== 'undefined') {
         const token = localStorage.getItem('admin_token');
         if (token) {
@@ -112,6 +137,21 @@ export async function updateProduct(id: number, productData: Partial<ProductForm
 
 export async function deleteProduct(id: number): Promise<void> {
     await api.delete(`/admin/products/${id}`);
+}
+
+export async function uploadProductImages(files: File[], folder: string = 'products'): Promise<string[]> {
+    const formData = new FormData();
+    files.forEach((file) => formData.append('images[]', file));
+    formData.append('folder', folder);
+
+    const { data } = await api.post<{ urls: string[] }>(
+        '/admin/upload-images',
+        formData,
+        {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        }
+    );
+    return data.urls;
 }
 
 // ============================
