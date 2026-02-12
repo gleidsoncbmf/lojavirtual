@@ -17,6 +17,8 @@ class Store extends Model
         'email',
         'whatsapp',
         'logo_url',
+        'banner_url',
+        'banner_position',
         'payment_config',
         'status',
     ];

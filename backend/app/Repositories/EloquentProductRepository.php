@@ -58,12 +58,43 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
     public function create(array $data): Product
     {
-        return Product::create($data);
+        $product = Product::create($data);
+
+        if (!empty($data['variations'])) {
+            $product->variations()->createMany($data['variations']);
+        }
+
+        return $product->load(['category', 'variations']);
     }
 
     public function update(Product $product, array $data): Product
     {
         $product->update($data);
+
+        if (isset($data['variations'])) {
+            // Get existing variation IDs
+            $existingIds = $product->variations()->pluck('id')->toArray();
+            $newVariations = collect($data['variations']);
+
+            // IDs to keep (those that represent existing variations)
+            $keepIds = $newVariations->pluck('id')->filter()->toArray();
+
+            // Delete variations that are not in the new list
+            $deleteIds = array_diff($existingIds, $keepIds);
+            if (!empty($deleteIds)) {
+                $product->variations()->whereIn('id', $deleteIds)->delete();
+            }
+
+            // Update or Create variations
+            foreach ($newVariations as $variationData) {
+                if (isset($variationData['id']) && in_array($variationData['id'], $existingIds)) {
+                    $product->variations()->where('id', $variationData['id'])->update($variationData);
+                } else {
+                    $product->variations()->create($variationData);
+                }
+            }
+        }
+
         return $product->fresh(['category', 'variations']);
     }
 

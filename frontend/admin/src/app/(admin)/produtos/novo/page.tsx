@@ -7,6 +7,7 @@ import type { Category, ProductFormData } from '@/types';
 import { ArrowLeft, Loader2, Save } from 'lucide-react';
 import Link from 'next/link';
 import ImageUploader from '@/components/ImageUploader';
+import ProductVariations from '@/components/ProductVariations';
 
 export default function NewProductPage() {
     const router = useRouter();
@@ -23,6 +24,7 @@ export default function NewProductPage() {
         active: true,
         category_id: null,
         images: [],
+        variations: [],
     });
 
     useEffect(() => {
@@ -124,6 +126,13 @@ export default function NewProductPage() {
                         <ImageUploader
                             images={form.images || []}
                             onChange={(imgs) => setForm((prev) => ({ ...prev, images: imgs }))}
+                        />
+                    </div>
+
+                    <div className="md:col-span-2 border-t border-white/5 pt-5">
+                        <ProductVariations
+                            variations={form.variations || []}
+                            onChange={(variations) => setForm((prev) => ({ ...prev, variations }))}
                         />
                     </div>
                 </div>

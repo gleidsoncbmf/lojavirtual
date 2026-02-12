@@ -15,6 +15,7 @@ class ProductDTO
         public readonly bool $active,
         public readonly ?int $categoryId,
         public readonly ?array $images,
+        public readonly ?array $variations = [],
     ) {
     }
 
@@ -31,6 +32,7 @@ class ProductDTO
             active: (bool) ($data['active'] ?? true),
             categoryId: $data['category_id'] ?? null,
             images: $data['images'] ?? null,
+            variations: $data['variations'] ?? [],
         );
     }
 
@@ -47,6 +49,7 @@ class ProductDTO
             'active' => $this->active,
             'category_id' => $this->categoryId,
             'images' => $this->images,
+            'variations' => $this->variations,
         ];
     }
 }

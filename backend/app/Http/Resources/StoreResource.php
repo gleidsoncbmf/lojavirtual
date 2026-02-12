@@ -16,6 +16,8 @@ class StoreResource extends JsonResource
             'email' => $this->email,
             'whatsapp' => $this->whatsapp,
             'logo_url' => $this->logo_url,
+            'banner_url' => $this->banner_url,
+            'banner_position' => $this->banner_position,
             'status' => $this->status,
             'theme' => $this->whenLoaded('theme', fn() => $this->theme ? [
                 'primary_color' => $this->theme->primary_color,

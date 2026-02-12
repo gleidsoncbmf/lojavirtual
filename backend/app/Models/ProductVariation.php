@@ -16,6 +16,7 @@ class ProductVariation extends Model
         'price',
         'stock',
         'sku',
+        'image',
     ];
 
     protected function casts(): array

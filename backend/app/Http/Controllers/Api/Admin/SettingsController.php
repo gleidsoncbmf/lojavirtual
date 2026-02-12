@@ -102,6 +102,8 @@ class SettingsController extends Controller
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|max:255',
             'logo_url' => 'nullable|string',
+            'banner_url' => 'nullable|string',
+            'banner_position' => 'nullable|string',
         ]);
 
         $store = $request->user()->store;

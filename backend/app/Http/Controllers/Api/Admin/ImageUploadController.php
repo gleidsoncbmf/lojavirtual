@@ -14,7 +14,7 @@ class ImageUploadController extends Controller
         $request->validate([
             'images' => 'required|array|min:1',
             'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:5120',
-            'folder' => 'nullable|string|in:products,categories,logos',
+            'folder' => 'nullable|string|in:products,categories,logos,banners',
         ]);
 
         $user = $request->user();

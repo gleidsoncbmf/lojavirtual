@@ -73,6 +73,8 @@ export interface StoreConfig {
     email: string | null;
     whatsapp: string | null;
     logo_url: string | null;
+    banner_url?: string | null;
+    banner_position?: string;
     status: string;
     theme: StoreTheme | null;
     domains?: StoreDomain[];
@@ -133,13 +135,7 @@ export interface CategoryFormData {
 // ============================
 // Products
 // ============================
-export interface ProductVariation {
-    id: number;
-    name: string;
-    price: number | null;
-    stock: number;
-    sku: string;
-}
+
 
 export interface Product {
     id: number;
@@ -158,17 +154,27 @@ export interface Product {
     created_at?: string;
 }
 
+export interface ProductVariation {
+    id?: number;
+    name: string;
+    price: number | null;
+    stock: number;
+    sku: string;
+    image: string | null;
+}
+
 export interface ProductFormData {
     name: string;
     slug?: string;
-    description?: string;
+    description: string;
     price: number;
-    compare_price?: number | null;
-    sku?: string;
-    stock?: number;
-    active?: boolean;
-    category_id?: number | null;
-    images?: string[];
+    compare_price: number | null;
+    sku: string;
+    stock: number;
+    active: boolean;
+    category_id: number | null;
+    images: string[];
+    variations?: ProductVariation[];
 }
 
 // ============================

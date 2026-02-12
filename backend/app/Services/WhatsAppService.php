@@ -27,7 +27,7 @@ class WhatsAppService
      */
     public function buildOrderMessage(Store $store, Order $order): string
     {
-        $order->load('items');
+        $order->load(['items.variation']);
 
         $lines = [];
         $lines[] = "🛒 *Novo Pedido - {$store->name}*";
@@ -85,7 +85,11 @@ class WhatsAppService
         $lines[] = "📦 *Produtos:*";
 
         foreach ($order->items as $item) {
-            $lines[] = "  • {$item->product_name} x{$item->quantity} — R$ " . number_format($item->total, 2, ',', '.');
+            $productName = $item->product_name;
+            if ($item->variation) {
+                $productName .= " ({$item->variation->name})";
+            }
+            $lines[] = "  • {$productName} x{$item->quantity} — R$ " . number_format($item->total, 2, ',', '.');
         }
 
         $lines[] = "";

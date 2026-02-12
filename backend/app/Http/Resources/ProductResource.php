@@ -34,6 +34,7 @@ class ProductResource extends JsonResource
                     'price' => $v->price ? (float) $v->price : null,
                     'stock' => $v->stock,
                     'sku' => $v->sku,
+                    'image' => $v->image,
                 ])
             ),
             'created_at' => $this->created_at?->toISOString(),

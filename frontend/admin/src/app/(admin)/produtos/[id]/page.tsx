@@ -7,6 +7,7 @@ import type { Category, ProductFormData } from '@/types';
 import { ArrowLeft, Loader2, Save } from 'lucide-react';
 import Link from 'next/link';
 import ImageUploader from '@/components/ImageUploader';
+import ProductVariations from '@/components/ProductVariations';
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
@@ -41,6 +42,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                     active: product.active,
                     category_id: product.category_id,
                     images: product.images || [],
+                    variations: product.variations || [],
                 });
                 setCategories(cats);
             })
@@ -151,6 +153,13 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                         <ImageUploader
                             images={form.images || []}
                             onChange={(imgs) => setForm((prev) => ({ ...prev, images: imgs }))}
+                        />
+                    </div>
+
+                    <div className="md:col-span-2 border-t border-white/5 pt-5">
+                        <ProductVariations
+                            variations={form.variations || []}
+                            onChange={(variations) => setForm((prev) => ({ ...prev, variations }))}
                         />
                     </div>
                 </div>

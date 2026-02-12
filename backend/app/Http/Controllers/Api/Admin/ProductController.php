@@ -49,6 +49,12 @@ class ProductController extends Controller
             'category_id' => 'nullable|exists:categories,id',
             'images' => 'nullable|array',
             'images.*' => 'string',
+            'variations' => 'nullable|array',
+            'variations.*.name' => 'required_with:variations|string',
+            'variations.*.price' => 'nullable|numeric|min:0',
+            'variations.*.stock' => 'integer|min:0',
+            'variations.*.sku' => 'nullable|string',
+            'variations.*.image' => 'nullable|string',
         ]);
 
         if (empty($validated['slug'])) {
@@ -97,6 +103,13 @@ class ProductController extends Controller
             'active' => 'sometimes|boolean',
             'category_id' => 'nullable|exists:categories,id',
             'images' => 'nullable|array',
+            'variations' => 'nullable|array',
+            'variations.*.id' => 'nullable|exists:product_variations,id',
+            'variations.*.name' => 'required_with:variations|string',
+            'variations.*.price' => 'nullable|numeric|min:0',
+            'variations.*.stock' => 'integer|min:0',
+            'variations.*.sku' => 'nullable|string',
+            'variations.*.image' => 'nullable|string',
         ]);
 
         $dto = ProductDTO::fromRequest(array_merge($product->toArray(), $validated));

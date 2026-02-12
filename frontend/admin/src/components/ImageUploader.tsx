@@ -7,9 +7,11 @@ import { uploadProductImages } from '@/lib/api';
 interface ImageUploaderProps {
     images: string[];
     onChange: (images: string[]) => void;
+    maxFiles?: number;
 }
 
-export default function ImageUploader({ images, onChange }: ImageUploaderProps) {
+
+export default function ImageUploader({ images, onChange, maxFiles }: ImageUploaderProps) {
     const [uploading, setUploading] = useState(false);
     const [dragOver, setDragOver] = useState(false);
     const [dragIndex, setDragIndex] = useState<number | null>(null);
@@ -18,12 +20,17 @@ export default function ImageUploader({ images, onChange }: ImageUploaderProps) 
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleFiles = useCallback(async (files: FileList | File[]) => {
-        const fileArray = Array.from(files).filter((f) =>
+        let fileArray = Array.from(files).filter((f) =>
             ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(f.type)
         );
 
         if (fileArray.length === 0) {
             setError('Selecione imagens válidas (JPG, PNG ou WebP).');
+            return;
+        }
+
+        if (maxFiles && (images.length + fileArray.length > maxFiles)) {
+            setError(`Você só pode enviar no máximo ${maxFiles} imagens.`);
             return;
         }
 
@@ -217,14 +224,16 @@ export default function ImageUploader({ images, onChange }: ImageUploaderProps) 
                     ))}
 
                     {/* Add more button */}
-                    <button
-                        type="button"
-                        onClick={() => inputRef.current?.click()}
-                        className="aspect-square rounded-xl border-2 border-dashed border-white/10 hover:border-white/20 bg-white/[0.02] hover:bg-white/[0.04] flex flex-col items-center justify-center gap-1 transition-all"
-                    >
-                        <ImagePlus className="w-6 h-6 text-gray-500" />
-                        <span className="text-xs text-gray-500">Adicionar</span>
-                    </button>
+                    {(!maxFiles || images.length < maxFiles) && (
+                        <button
+                            type="button"
+                            onClick={() => inputRef.current?.click()}
+                            className="aspect-square rounded-xl border-2 border-dashed border-white/10 hover:border-white/20 bg-white/[0.02] hover:bg-white/[0.04] flex flex-col items-center justify-center gap-1 transition-all"
+                        >
+                            <ImagePlus className="w-6 h-6 text-gray-500" />
+                            <span className="text-xs text-gray-500">Adicionar</span>
+                        </button>
+                    )}
                 </div>
             )}
         </div>

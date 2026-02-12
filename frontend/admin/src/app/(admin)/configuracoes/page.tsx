@@ -16,7 +16,7 @@ export default function SettingsPage() {
     const [success, setSuccess] = useState('');
 
     // Form states
-    const [storeForm, setStoreForm] = useState({ name: '', email: '', logo_url: '' });
+    const [storeForm, setStoreForm] = useState({ name: '', email: '', logo_url: '', banner_url: '', banner_position: 'center' });
     const [themeForm, setThemeForm] = useState<Partial<StoreTheme>>({});
     const [paymentForm, setPaymentForm] = useState<PaymentConfig>({});
     const [whatsappForm, setWhatsappForm] = useState('');
@@ -26,7 +26,13 @@ export default function SettingsPage() {
         getSettings()
             .then((data) => {
                 setSettings(data);
-                setStoreForm({ name: data.name || '', email: data.email || '', logo_url: data.logo_url || '' });
+                setStoreForm({
+                    name: data.name || '',
+                    email: data.email || '',
+                    logo_url: data.logo_url || '',
+                    banner_url: data.banner_url || '',
+                    banner_position: data.banner_position || 'center'
+                });
                 if (data.theme) {
                     setThemeForm({
                         primary_color: data.theme.primary_color,
@@ -169,6 +175,27 @@ export default function SettingsPage() {
                                 onChange={(url) => setStoreForm({ ...storeForm, logo_url: url })}
                                 folder="logos"
                                 label="Logo da Loja"
+                            />
+                        </div>
+                        <div>
+                            <SingleImageUploader
+                                value={storeForm.banner_url}
+                                onChange={(url) => setStoreForm({ ...storeForm, banner_url: url })}
+                                folder="banners"
+                                label="Banner da Loja"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="text-sm font-medium text-gray-300 mb-2 block">
+                                Posição do Banner
+                                <span className="text-xs text-gray-500 ml-2 font-normal">(Arraste a imagem para ajustar o foco)</span>
+                            </label>
+
+                            <BannerPositionEditor
+                                imageUrl={storeForm.banner_url}
+                                position={storeForm.banner_position || 'center'}
+                                onChange={(newPos) => setStoreForm({ ...storeForm, banner_position: newPos })}
                             />
                         </div>
                         <SaveButton saving={saving} />
@@ -350,6 +377,89 @@ function SaveButton({ saving }: { saving: boolean }) {
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 {saving ? 'Salvando...' : 'Salvar'}
             </button>
+        </div>
+    );
+}
+
+function BannerPositionEditor({ imageUrl, position, onChange }: { imageUrl: string, position: string, onChange: (pos: string) => void }) {
+    const [isDragging, setIsDragging] = useState(false);
+    const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+    // Parse initial position or default to 50% 50%
+    const [currentPos, setCurrentPos] = useState(() => {
+        if (!position || ['top', 'center', 'bottom'].includes(position)) return { x: 50, y: 50 };
+        const parts = position.split(' ');
+        return {
+            x: parseFloat(parts[0]) || 50,
+            y: parseFloat(parts[1]) || 50
+        };
+    });
+
+    useEffect(() => {
+        if (['top', 'center', 'bottom'].includes(position)) {
+            if (position === 'top') setCurrentPos({ x: 50, y: 0 });
+            else if (position === 'bottom') setCurrentPos({ x: 50, y: 100 });
+            else setCurrentPos({ x: 50, y: 50 });
+        }
+    }, [position]);
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (!imageUrl) return;
+        setIsDragging(true);
+        setStartPos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging) return;
+
+        // Calculate delta
+        // Sensitivity factor to make it feel natural
+        const sensitivity = 0.5;
+        const deltaX = (startPos.x - e.clientX) * sensitivity;
+        const deltaY = (startPos.y - e.clientY) * sensitivity;
+
+        let newX = currentPos.x + deltaX;
+        let newY = currentPos.y + deltaY;
+
+        // Clamp values between 0 and 100
+        newX = Math.max(0, Math.min(100, newX));
+        newY = Math.max(0, Math.min(100, newY));
+
+        setCurrentPos({ x: newX, y: newY });
+        setStartPos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+        onChange(`${currentPos.x.toFixed(1)}% ${currentPos.y.toFixed(1)}%`);
+    };
+
+    return (
+        <div
+            className={`w-full h-48 rounded-xl border border-white/10 overflow-hidden bg-gray-900 relative ${imageUrl ? 'cursor-move' : 'cursor-default'}`}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+        >
+            {imageUrl ? (
+                <div
+                    className="w-full h-full bg-cover bg-no-repeat transition-none select-none pointer-events-none"
+                    style={{
+                        backgroundImage: `url(${imageUrl})`,
+                        backgroundPosition: `${currentPos.x}% ${currentPos.y}%`
+                    }}
+                />
+            ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-gray-600 text-xs">
+                    Sem banner para ajustar
+                </div>
+            )}
+
+            {imageUrl && (
+                <div className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded-md pointer-events-none backdrop-blur-sm">
+                    {Math.round(currentPos.x)}% {Math.round(currentPos.y)}%
+                </div>
+            )}
         </div>
     );
 }
