@@ -28,30 +28,30 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#0a0c14] relative overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0a0c14] relative overflow-hidden transition-colors duration-300">
             {/* Background effects */}
             <div className="absolute inset-0">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/8 rounded-full blur-3xl" />
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-600/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-emerald-600/8 rounded-full blur-3xl" />
             </div>
 
             <div className="relative w-full max-w-md px-6">
                 {/* Logo */}
                 <div className="text-center mb-8 animate-in">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-indigo-500/30">
+                    <div className="w-16 h-16 rounded-2xl bg-green-600 flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-green-500/30">
                         <Store className="w-8 h-8 text-white" />
                     </div>
-                    <h1 className="text-2xl font-bold text-white">Painel Admin</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Painel Admin</h1>
                     <p className="text-gray-500 text-sm mt-1">Faça login para acessar sua loja</p>
                 </div>
 
                 {/* Form */}
                 <form
                     onSubmit={handleSubmit}
-                    className="bg-[#0f111a] border border-white/5 rounded-2xl p-8 space-y-5 animate-in shadow-xl"
+                    className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl p-8 space-y-5 animate-in shadow-xl transition-colors duration-300"
                 >
                     {error && (
-                        <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3">
+                        <div className="bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400 text-sm rounded-xl px-4 py-3">
                             {error}
                         </div>
                     )}
@@ -83,7 +83,7 @@ export default function LoginPage() {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition"
                             >
                                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                             </button>
@@ -93,7 +93,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-lg shadow-indigo-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full py-2.5 rounded-xl bg-green-600 text-white font-semibold text-sm hover:bg-green-500 transition-all duration-200 shadow-lg shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {loading ? (
                             <>

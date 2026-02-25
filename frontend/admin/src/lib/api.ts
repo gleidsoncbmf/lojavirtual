@@ -250,8 +250,20 @@ export async function updateDomain(domain: string): Promise<void> {
 // ============================
 // Shipping
 // ============================
-export async function getShippingOptions(): Promise<{ data: ShippingOption[]; shipping_zip: string | null }> {
-    const { data } = await api.get<{ data: ShippingOption[]; shipping_zip: string | null }>('/admin/shipping');
+export async function getShippingOptions(): Promise<{
+    data: ShippingOption[];
+    shipping_zip: string | null;
+    has_correios_credentials: boolean;
+    correios_user: string | null;
+    correios_cartao_postagem: string | null;
+}> {
+    const { data } = await api.get<{
+        data: ShippingOption[];
+        shipping_zip: string | null;
+        has_correios_credentials: boolean;
+        correios_user: string | null;
+        correios_cartao_postagem: string | null;
+    }>('/admin/shipping');
     return data;
 }
 
@@ -271,6 +283,18 @@ export async function deleteShippingOption(id: number): Promise<void> {
 
 export async function updateShippingZip(shipping_zip: string): Promise<void> {
     await api.put('/admin/settings/shipping-zip', { shipping_zip });
+}
+
+export async function updateCorreiosCredentials(credentials: {
+    correios_user: string | null;
+    correios_password: string | null;
+    correios_cartao_postagem: string | null;
+}): Promise<{ has_correios_credentials: boolean }> {
+    const { data } = await api.put<{ has_correios_credentials: boolean }>(
+        '/admin/settings/correios',
+        credentials,
+    );
+    return data;
 }
 
 // ============================

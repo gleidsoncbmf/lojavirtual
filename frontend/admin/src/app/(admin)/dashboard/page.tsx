@@ -31,7 +31,7 @@ export default function DashboardPage() {
     if (loading) {
         return (
             <div className="flex items-center justify-center py-32">
-                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-green-600 dark:text-green-500 animate-spin" />
             </div>
         );
     }
@@ -84,8 +84,8 @@ export default function DashboardPage() {
             label: 'Produtos Ativos',
             value: `${stats.products.active} / ${stats.products.total}`,
             icon: Package,
-            gradient: 'from-purple-600 to-purple-400',
-            glow: 'shadow-purple-500/20',
+            gradient: 'from-teal-600 to-teal-400',
+            glow: 'shadow-teal-500/20',
         },
         {
             label: 'Categorias',
@@ -100,15 +100,15 @@ export default function DashboardPage() {
                 ? `${Math.round((stats.orders.paid / stats.orders.total) * 100)}%`
                 : '0%',
             icon: TrendingUp,
-            gradient: 'from-teal-600 to-teal-400',
-            glow: 'shadow-teal-500/20',
+            gradient: 'from-cyan-600 to-cyan-400',
+            glow: 'shadow-cyan-500/20',
         },
     ];
 
     return (
         <div className="space-y-8 animate-in">
             <div>
-                <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
                 <p className="text-gray-500 text-sm mt-1">Visão geral da sua loja</p>
             </div>
 
@@ -119,7 +119,7 @@ export default function DashboardPage() {
                     return (
                         <div
                             key={card.label}
-                            className={`bg-[#0f111a] border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-all duration-200 shadow-lg ${card.glow}`}
+                            className={`bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl p-5 hover:border-gray-300 dark:hover:border-white/10 transition-all duration-200 shadow-lg ${card.glow}`}
                         >
                             <div className="flex items-center justify-between mb-3">
                                 <span className="text-gray-500 text-xs font-medium uppercase tracking-wide">
@@ -129,19 +129,19 @@ export default function DashboardPage() {
                                     <Icon className="w-4 h-4 text-white" />
                                 </div>
                             </div>
-                            <p className="text-2xl font-bold text-white">{card.value}</p>
+                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{card.value}</p>
                         </div>
                     );
                 })}
             </div>
 
             {/* Recent Orders */}
-            <div className="bg-[#0f111a] border border-white/5 rounded-2xl overflow-hidden">
-                <div className="flex items-center justify-between p-5 border-b border-white/5">
-                    <h2 className="text-lg font-semibold text-white">Pedidos Recentes</h2>
+            <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden transition-colors duration-300">
+                <div className="flex items-center justify-between p-5 border-b border-gray-200 dark:border-white/5">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Pedidos Recentes</h2>
                     <Link
                         href="/pedidos"
-                        className="text-indigo-400 hover:text-indigo-300 text-sm font-medium transition"
+                        className="text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300 text-sm font-medium transition"
                     >
                         Ver todos →
                     </Link>
@@ -151,7 +151,7 @@ export default function DashboardPage() {
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                             <thead>
-                                <tr className="border-b border-white/5 text-gray-500 text-xs uppercase">
+                                <tr className="border-b border-gray-200 dark:border-white/5 text-gray-500 text-xs uppercase">
                                     <th className="text-left px-5 py-3 font-medium">Pedido</th>
                                     <th className="text-left px-5 py-3 font-medium">Cliente</th>
                                     <th className="text-left px-5 py-3 font-medium">Total</th>
@@ -163,15 +163,15 @@ export default function DashboardPage() {
                                 {stats.orders.recent.map((order) => (
                                     <tr
                                         key={order.id}
-                                        className="border-b border-white/[0.03] hover:bg-white/[0.02] transition"
+                                        className="border-b border-gray-100 dark:border-white/[0.03] hover:bg-gray-50 dark:hover:bg-white/[0.02] transition"
                                     >
                                         <td className="px-5 py-3">
-                                            <Link href={`/pedidos/${order.id}`} className="text-indigo-400 hover:underline font-medium">
+                                            <Link href={`/pedidos/${order.id}`} className="text-green-600 dark:text-green-400 hover:underline font-medium">
                                                 #{order.order_number}
                                             </Link>
                                         </td>
-                                        <td className="px-5 py-3 text-gray-300">{order.customer_name}</td>
-                                        <td className="px-5 py-3 text-white font-medium">
+                                        <td className="px-5 py-3 text-gray-700 dark:text-gray-300">{order.customer_name}</td>
+                                        <td className="px-5 py-3 text-gray-900 dark:text-white font-medium">
                                             {formatCurrency(order.total)}
                                         </td>
                                         <td className="px-5 py-3">

@@ -101,12 +101,12 @@ export default function CategoriesPage() {
         <div className="space-y-6 animate-in">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Categorias</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Categorias</h1>
                     <p className="text-gray-500 text-sm mt-1">Organize os produtos da sua loja</p>
                 </div>
                 <button
                     onClick={() => { resetForm(); setShowForm(true); }}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/25"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 text-white text-sm font-semibold hover:bg-green-500 transition-all shadow-lg shadow-green-500/25"
                 >
                     <Plus className="w-4 h-4" />
                     Nova Categoria
@@ -115,19 +115,19 @@ export default function CategoriesPage() {
 
             {/* Form Modal */}
             {showForm && (
-                <div className="bg-[#0f111a] border border-white/5 rounded-2xl p-6 scale-in">
+                <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl p-6 scale-in transition-colors duration-300">
                     <div className="flex items-center justify-between mb-5">
-                        <h2 className="text-lg font-semibold text-white">
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
                             {editing ? 'Editar Categoria' : 'Nova Categoria'}
                         </h2>
-                        <button onClick={resetForm} className="text-gray-500 hover:text-gray-300 transition">
+                        <button onClick={resetForm} className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition">
                             <X className="w-5 h-5" />
                         </button>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {error && (
-                            <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3">
+                            <div className="bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400 text-sm rounded-xl px-4 py-3">
                                 {error}
                             </div>
                         )}
@@ -163,13 +163,13 @@ export default function CategoriesPage() {
                         </div>
 
                         <div className="flex justify-end gap-3 pt-2">
-                            <button type="button" onClick={resetForm} className="px-4 py-2 rounded-xl text-sm text-gray-400 hover:bg-white/5 transition">
+                            <button type="button" onClick={resetForm} className="px-4 py-2 rounded-xl text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 transition">
                                 Cancelar
                             </button>
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold disabled:opacity-50 transition-all"
+                                className="flex items-center gap-2 px-5 py-2 rounded-xl bg-green-600 text-white text-sm font-semibold hover:bg-green-500 disabled:opacity-50 transition-all"
                             >
                                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                                 {saving ? 'Salvando...' : editing ? 'Atualizar' : 'Criar'}
@@ -180,10 +180,10 @@ export default function CategoriesPage() {
             )}
 
             {/* Table */}
-            <div className="bg-[#0f111a] border border-white/5 rounded-2xl overflow-hidden">
+            <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden transition-colors duration-300">
                 {loading ? (
                     <div className="flex items-center justify-center py-20">
-                        <Loader2 className="w-6 h-6 text-indigo-500 animate-spin" />
+                        <Loader2 className="w-6 h-6 text-green-600 dark:text-green-500 animate-spin" />
                     </div>
                 ) : categories.length === 0 ? (
                     <div className="text-center py-20 text-gray-500">
@@ -193,7 +193,7 @@ export default function CategoriesPage() {
                 ) : (
                     <table className="w-full text-sm">
                         <thead>
-                            <tr className="border-b border-white/5 text-gray-500 text-xs uppercase">
+                            <tr className="border-b border-gray-200 dark:border-white/5 text-gray-500 text-xs uppercase">
                                 <th className="text-left px-5 py-3 font-medium">Nome</th>
                                 <th className="text-left px-5 py-3 font-medium">Slug</th>
                                 <th className="text-left px-5 py-3 font-medium">Ordem</th>
@@ -204,19 +204,19 @@ export default function CategoriesPage() {
                         </thead>
                         <tbody>
                             {categories.map((cat) => (
-                                <tr key={cat.id} className="border-b border-white/[0.03] hover:bg-white/[0.02] transition">
-                                    <td className="px-5 py-3 text-white font-medium">{cat.name}</td>
+                                <tr key={cat.id} className="border-b border-gray-100 dark:border-white/[0.03] hover:bg-gray-50 dark:hover:bg-white/[0.02] transition">
+                                    <td className="px-5 py-3 text-gray-900 dark:text-white font-medium">{cat.name}</td>
                                     <td className="px-5 py-3 text-gray-500">{cat.slug}</td>
-                                    <td className="px-5 py-3 text-gray-400">{cat.sort_order}</td>
-                                    <td className="px-5 py-3 text-gray-400">{cat.products_count ?? 0}</td>
+                                    <td className="px-5 py-3 text-gray-600 dark:text-gray-400">{cat.sort_order}</td>
+                                    <td className="px-5 py-3 text-gray-600 dark:text-gray-400">{cat.products_count ?? 0}</td>
                                     <td className="px-5 py-3">
-                                        <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${cat.active ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gray-500/20 text-gray-400'}`}>
+                                        <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${cat.active ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-gray-500/20 text-gray-500 dark:text-gray-400'}`}>
                                             {cat.active ? 'Ativa' : 'Inativa'}
                                         </span>
                                     </td>
                                     <td className="px-5 py-3">
                                         <div className="flex items-center justify-end gap-2">
-                                            <button onClick={() => openEdit(cat)} className="p-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-indigo-400 transition">
+                                            <button onClick={() => openEdit(cat)} className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-green-600 dark:hover:text-green-400 transition">
                                                 <Pencil className="w-4 h-4" />
                                             </button>
                                             <button

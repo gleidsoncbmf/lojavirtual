@@ -52,14 +52,14 @@ export default function SingleImageUploader({
 
     return (
         <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-300">{label}</label>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
 
             {value ? (
                 <div className="relative group w-fit">
                     <img
                         src={value}
                         alt="Preview"
-                        className="w-32 h-32 object-cover rounded-xl border border-white/10"
+                        className="w-32 h-32 object-cover rounded-xl border border-gray-200 dark:border-white/10"
                     />
                     <button
                         type="button"
@@ -86,13 +86,13 @@ export default function SingleImageUploader({
                         flex flex-col items-center justify-center gap-2 p-6
                         w-32 h-32 rounded-xl border-2 border-dashed cursor-pointer transition-all
                         ${dragOver
-                            ? 'border-indigo-500 bg-indigo-500/10'
-                            : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
+                            ? 'border-green-500 bg-green-500/10'
+                            : 'border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02] hover:border-gray-400 dark:hover:border-white/20 hover:bg-gray-100 dark:hover:bg-white/[0.04]'
                         }
                     `}
                 >
                     {uploading ? (
-                        <Loader2 className="w-6 h-6 text-indigo-400 animate-spin" />
+                        <Loader2 className="w-6 h-6 text-green-500 dark:text-green-400 animate-spin" />
                     ) : (
                         <>
                             <Upload className="w-5 h-5 text-gray-500" />

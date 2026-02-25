@@ -99,7 +99,7 @@ export default function ImageUploader({ images, onChange, maxFiles }: ImageUploa
 
     return (
         <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-300">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Imagens do Produto
             </label>
 
@@ -117,25 +117,25 @@ export default function ImageUploader({ images, onChange, maxFiles }: ImageUploa
                     p-8 rounded-xl border-2 border-dashed cursor-pointer
                     transition-all duration-200
                     ${dragOver
-                        ? 'border-indigo-500 bg-indigo-500/10'
-                        : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
+                        ? 'border-green-500 bg-green-500/10'
+                        : 'border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02] hover:border-gray-400 dark:hover:border-white/20 hover:bg-gray-100 dark:hover:bg-white/[0.04]'
                     }
                 `}
             >
                 {uploading ? (
                     <>
-                        <Loader2 className="w-8 h-8 text-indigo-400 animate-spin" />
-                        <span className="text-sm text-gray-400">Enviando imagens...</span>
+                        <Loader2 className="w-8 h-8 text-green-500 dark:text-green-400 animate-spin" />
+                        <span className="text-sm text-gray-500 dark:text-gray-400">Enviando imagens...</span>
                     </>
                 ) : (
                     <>
-                        <div className="w-12 h-12 rounded-full bg-indigo-500/10 flex items-center justify-center">
-                            <Upload className="w-6 h-6 text-indigo-400" />
+                        <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
+                            <Upload className="w-6 h-6 text-green-500 dark:text-green-400" />
                         </div>
                         <div className="text-center">
-                            <p className="text-sm text-gray-300">
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
                                 Arraste imagens aqui ou{' '}
-                                <span className="text-indigo-400 font-semibold">
+                                <span className="text-green-600 dark:text-green-400 font-semibold">
                                     clique para selecionar
                                 </span>
                             </p>
@@ -180,8 +180,8 @@ export default function ImageUploader({ images, onChange, maxFiles }: ImageUploa
                                 group relative aspect-square rounded-xl overflow-hidden
                                 border transition-all duration-200
                                 ${dragOverIndex === index
-                                    ? 'border-indigo-500 scale-105'
-                                    : 'border-white/10 hover:border-white/20'
+                                    ? 'border-green-500 scale-105'
+                                    : 'border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20'
                                 }
                                 ${dragIndex === index ? 'opacity-40' : 'opacity-100'}
                             `}
@@ -194,7 +194,7 @@ export default function ImageUploader({ images, onChange, maxFiles }: ImageUploa
 
                             {/* Badge for first image */}
                             {index === 0 && (
-                                <span className="absolute top-1.5 left-1.5 px-2 py-0.5 bg-indigo-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider">
+                                <span className="absolute top-1.5 left-1.5 px-2 py-0.5 bg-green-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider">
                                     Principal
                                 </span>
                             )}
@@ -228,7 +228,7 @@ export default function ImageUploader({ images, onChange, maxFiles }: ImageUploa
                         <button
                             type="button"
                             onClick={() => inputRef.current?.click()}
-                            className="aspect-square rounded-xl border-2 border-dashed border-white/10 hover:border-white/20 bg-white/[0.02] hover:bg-white/[0.04] flex flex-col items-center justify-center gap-1 transition-all"
+                            className="aspect-square rounded-xl border-2 border-dashed border-gray-300 dark:border-white/10 hover:border-gray-400 dark:hover:border-white/20 bg-gray-50 dark:bg-white/[0.02] hover:bg-gray-100 dark:hover:bg-white/[0.04] flex flex-col items-center justify-center gap-1 transition-all"
                         >
                             <ImagePlus className="w-6 h-6 text-gray-500" />
                             <span className="text-xs text-gray-500">Adicionar</span>

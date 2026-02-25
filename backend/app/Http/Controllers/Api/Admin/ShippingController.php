@@ -25,6 +25,9 @@ class ShippingController extends Controller
         return response()->json([
             'data' => $this->shippingService->getStoreOptions($store),
             'shipping_zip' => $store->shipping_zip,
+            'has_correios_credentials' => !empty($store->correios_user) && !empty($store->correios_cartao_postagem),
+            'correios_user' => $store->correios_user,
+            'correios_cartao_postagem' => $store->correios_cartao_postagem,
         ]);
     }
 
@@ -106,6 +109,38 @@ class ShippingController extends Controller
         return response()->json([
             'message' => 'CEP de origem atualizado.',
             'shipping_zip' => $store->shipping_zip,
+        ]);
+    }
+
+    /**
+     * Update the store's Correios API credentials.
+     */
+    public function updateCorreiosCredentials(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'correios_user' => 'nullable|string|max:255',
+            'correios_password' => 'nullable|string|max:255',
+            'correios_cartao_postagem' => 'nullable|string|max:50',
+        ]);
+
+        $store = $request->user()->store;
+
+        // Only update password if provided (allow clearing with empty string)
+        $updateData = [
+            'correios_user' => $validated['correios_user'] ?? null,
+            'correios_cartao_postagem' => $validated['correios_cartao_postagem'] ?? null,
+        ];
+
+        // Only update password if it was sent (non-null)
+        if (array_key_exists('correios_password', $validated) && $validated['correios_password'] !== null) {
+            $updateData['correios_password'] = $validated['correios_password'];
+        }
+
+        $store->update($updateData);
+
+        return response()->json([
+            'message' => 'Credenciais dos Correios atualizadas.',
+            'has_correios_credentials' => !empty($store->correios_user) && !empty($store->correios_cartao_postagem),
         ]);
     }
 }

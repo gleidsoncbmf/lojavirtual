@@ -91,7 +91,7 @@ export default function LojasPage() {
     if (loading) {
         return (
             <div className="flex items-center justify-center py-32">
-                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-green-600 dark:text-green-500 animate-spin" />
             </div>
         );
     }
@@ -101,14 +101,14 @@ export default function LojasPage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Lojas</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Lojas</h1>
                     <p className="text-gray-500 text-sm mt-1">
                         Gerencie todas as lojas da plataforma
                     </p>
                 </div>
                 <button
                     onClick={() => setModalOpen(true)}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-lg shadow-indigo-500/25"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 text-white font-semibold text-sm hover:bg-green-500 transition-all duration-200 shadow-lg shadow-green-500/25"
                 >
                     <Plus className="w-4 h-4" />
                     Nova Loja
@@ -117,46 +117,46 @@ export default function LojasPage() {
 
             {/* Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-[#0f111a] border border-white/5 rounded-2xl p-5">
+                <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl p-5 transition-colors duration-300">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-gray-500 text-xs font-medium uppercase tracking-wide">Total</span>
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-indigo-400 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-600 to-green-400 flex items-center justify-center">
                             <Building2 className="w-4 h-4 text-white" />
                         </div>
                     </div>
-                    <p className="text-2xl font-bold text-white">{stores.length}</p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stores.length}</p>
                 </div>
-                <div className="bg-[#0f111a] border border-white/5 rounded-2xl p-5">
+                <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl p-5 transition-colors duration-300">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-gray-500 text-xs font-medium uppercase tracking-wide">Ativas</span>
                         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-400 flex items-center justify-center">
                             <Building2 className="w-4 h-4 text-white" />
                         </div>
                     </div>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
                         {stores.filter((s) => s.status === 'active').length}
                     </p>
                 </div>
-                <div className="bg-[#0f111a] border border-white/5 rounded-2xl p-5">
+                <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl p-5 transition-colors duration-300">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-gray-500 text-xs font-medium uppercase tracking-wide">Produtos Total</span>
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-purple-400 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-600 to-teal-400 flex items-center justify-center">
                             <Package className="w-4 h-4 text-white" />
                         </div>
                     </div>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
                         {stores.reduce((acc, s) => acc + (s.products_count || 0), 0)}
                     </p>
                 </div>
             </div>
 
             {/* Table */}
-            <div className="bg-[#0f111a] border border-white/5 rounded-2xl overflow-hidden">
+            <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden transition-colors duration-300">
                 {stores.length > 0 ? (
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                             <thead>
-                                <tr className="border-b border-white/5 text-gray-500 text-xs uppercase">
+                                <tr className="border-b border-gray-200 dark:border-white/5 text-gray-500 text-xs uppercase">
                                     <th className="text-left px-5 py-3 font-medium">Loja</th>
                                     <th className="text-left px-5 py-3 font-medium">Dono</th>
                                     <th className="text-left px-5 py-3 font-medium">Slug / URL</th>
@@ -173,36 +173,36 @@ export default function LojasPage() {
                                     return (
                                         <tr
                                             key={store.id}
-                                            className="border-b border-white/[0.03] hover:bg-white/[0.02] transition"
+                                            className="border-b border-gray-100 dark:border-white/[0.03] hover:bg-gray-50 dark:hover:bg-white/[0.02] transition"
                                         >
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-white/5 flex items-center justify-center flex-shrink-0">
-                                                        <Building2 className="w-4 h-4 text-indigo-400" />
+                                                    <div className="w-8 h-8 rounded-lg bg-green-500/10 dark:bg-green-500/20 border border-gray-200 dark:border-white/5 flex items-center justify-center flex-shrink-0">
+                                                        <Building2 className="w-4 h-4 text-green-600 dark:text-green-400" />
                                                     </div>
-                                                    <span className="text-white font-medium">{store.name}</span>
+                                                    <span className="text-gray-900 dark:text-white font-medium">{store.name}</span>
                                                 </div>
                                             </td>
                                             <td className="px-5 py-3">
                                                 {store.owner ? (
                                                     <div>
-                                                        <p className="text-gray-300 text-sm">{store.owner.name}</p>
-                                                        <p className="text-gray-500 text-xs">{store.owner.email}</p>
+                                                        <p className="text-gray-700 dark:text-gray-300 text-sm">{store.owner.name}</p>
+                                                        <p className="text-gray-400 dark:text-gray-500 text-xs">{store.owner.email}</p>
                                                     </div>
                                                 ) : (
-                                                    <span className="text-gray-600 text-xs">Sem dono</span>
+                                                    <span className="text-gray-400 dark:text-gray-600 text-xs">Sem dono</span>
                                                 )}
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-2">
-                                                    <code className="text-indigo-400 text-xs bg-indigo-500/10 px-2 py-1 rounded-lg">
+                                                    <code className="text-green-600 dark:text-green-400 text-xs bg-green-500/10 px-2 py-1 rounded-lg">
                                                         {store.slug}
                                                     </code>
                                                     <a
                                                         href={`http://localhost:3000?store=${store.slug}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-gray-500 hover:text-indigo-400 transition"
+                                                        className="text-gray-500 hover:text-green-600 dark:hover:text-green-400 transition"
                                                         title="Abrir loja"
                                                     >
                                                         <ExternalLink className="w-3.5 h-3.5" />
@@ -210,13 +210,13 @@ export default function LojasPage() {
                                                 </div>
                                             </td>
                                             <td className="px-5 py-3 text-center">
-                                                <div className="flex items-center justify-center gap-1.5 text-gray-300">
+                                                <div className="flex items-center justify-center gap-1.5 text-gray-700 dark:text-gray-300">
                                                     <Package className="w-3.5 h-3.5 text-gray-500" />
                                                     {store.products_count || 0}
                                                 </div>
                                             </td>
                                             <td className="px-5 py-3 text-center">
-                                                <div className="flex items-center justify-center gap-1.5 text-gray-300">
+                                                <div className="flex items-center justify-center gap-1.5 text-gray-700 dark:text-gray-300">
                                                     <ShoppingCart className="w-3.5 h-3.5 text-gray-500" />
                                                     {store.orders_count || 0}
                                                 </div>
@@ -251,7 +251,7 @@ export default function LojasPage() {
                                                         </button>
                                                         <button
                                                             onClick={() => setDeleteConfirm(null)}
-                                                            className="text-xs px-3 py-1.5 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 transition"
+                                                            className="text-xs px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 transition"
                                                         >
                                                             Cancelar
                                                         </button>
@@ -276,7 +276,7 @@ export default function LojasPage() {
                     <div className="text-center py-16 text-gray-500">
                         <Building2 className="w-12 h-12 mx-auto mb-4 opacity-20" />
                         <p className="mb-1">Nenhuma loja cadastrada</p>
-                        <p className="text-xs text-gray-600">
+                        <p className="text-xs text-gray-400 dark:text-gray-600">
                             Clique em &quot;Nova Loja&quot; para criar a primeira.
                         </p>
                     </div>

@@ -20,14 +20,24 @@ class Store extends Model
         'banner_url',
         'banner_position',
         'shipping_zip',
+        'correios_user',
+        'correios_password',
+        'correios_cartao_postagem',
         'payment_config',
         'status',
+    ];
+
+    protected $hidden = [
+        'correios_user',
+        'correios_password',
+        'correios_cartao_postagem',
     ];
 
     protected function casts(): array
     {
         return [
             'payment_config' => 'array',
+            'correios_password' => 'encrypted',
         ];
     }
 

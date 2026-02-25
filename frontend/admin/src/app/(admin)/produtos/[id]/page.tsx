@@ -80,7 +80,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     if (loading) {
         return (
             <div className="flex items-center justify-center py-32">
-                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-green-600 dark:text-green-500 animate-spin" />
             </div>
         );
     }
@@ -88,18 +88,18 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     return (
         <div className="space-y-6 animate-in max-w-3xl">
             <div className="flex items-center gap-4">
-                <Link href="/produtos" className="p-2 rounded-lg hover:bg-white/5 text-gray-400 transition">
+                <Link href="/produtos" className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-500 dark:text-gray-400 transition">
                     <ArrowLeft className="w-5 h-5" />
                 </Link>
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Editar Produto</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Editar Produto</h1>
                     <p className="text-gray-500 text-sm mt-1">Atualize as informações do produto</p>
                 </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="bg-[#0f111a] border border-white/5 rounded-2xl p-6 space-y-5">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl p-6 space-y-5 transition-colors duration-300">
                 {error && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3">
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400 text-sm rounded-xl px-4 py-3">
                         {error}
                     </div>
                 )}
@@ -164,8 +164,8 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                     </div>
 
                     {/* Weight & Dimensions — always shown for shipping calculation */}
-                    <div className="md:col-span-2 border-t border-white/5 pt-5">
-                        <h3 className="text-sm font-semibold text-gray-300 mb-3">📦 Peso e Dimensões (para cálculo de frete)</h3>
+                    <div className="md:col-span-2 border-t border-gray-200 dark:border-white/5 pt-5">
+                        <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">📦 Peso e Dimensões (para cálculo de frete)</h3>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div>
                                 <label htmlFor="weight">Peso (g)</label>
@@ -186,7 +186,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                         </div>
                     </div>
 
-                    <div className="md:col-span-2 border-t border-white/5 pt-5">
+                    <div className="md:col-span-2 border-t border-gray-200 dark:border-white/5 pt-5">
                         <ProductVariations
                             variations={form.variations || []}
                             onChange={(variations) => setForm((prev) => ({ ...prev, variations }))}
@@ -198,7 +198,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                     <button
                         type="submit"
                         disabled={saving}
-                        className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/25 disabled:opacity-50"
+                        className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-green-600 text-white text-sm font-semibold hover:bg-green-500 transition-all shadow-lg shadow-green-500/25 disabled:opacity-50"
                     >
                         {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                         {saving ? 'Salvando...' : 'Salvar Alterações'}
@@ -208,4 +208,3 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         </div>
     );
 }
-

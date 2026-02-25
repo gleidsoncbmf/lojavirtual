@@ -38,14 +38,14 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className="fixed left-0 top-0 z-40 h-screen w-64 bg-[#0f111a] border-r border-white/5 flex flex-col">
+        <aside className="fixed left-0 top-0 z-40 h-screen w-64 bg-white dark:bg-[#0f111a] border-r border-gray-200 dark:border-white/5 flex flex-col transition-colors duration-300">
             {/* Logo */}
-            <div className="flex items-center gap-3 px-6 py-5 border-b border-white/5">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-200 dark:border-white/5">
+                <div className="w-9 h-9 rounded-xl bg-green-600 flex items-center justify-center shadow-lg shadow-green-500/30">
                     <Store className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                    <h1 className="text-white font-bold text-lg leading-tight">Admin</h1>
+                    <h1 className="text-gray-900 dark:text-white font-bold text-lg leading-tight">Admin</h1>
                     <p className="text-gray-500 text-[11px]">Painel de Gestão</p>
                 </div>
             </div>
@@ -64,14 +64,14 @@ export default function Sidebar() {
                             className={cn(
                                 'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200',
                                 isActive
-                                    ? 'bg-indigo-500/15 text-indigo-400 shadow-sm shadow-indigo-500/10'
-                                    : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                                    ? 'bg-green-500/15 text-green-700 dark:text-green-400 shadow-sm shadow-green-500/10'
+                                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-200'
                             )}
                         >
-                            <Icon className={cn('w-5 h-5', isActive && 'text-indigo-400')} />
+                            <Icon className={cn('w-5 h-5', isActive && 'text-green-700 dark:text-green-400')} />
                             {item.label}
                             {isActive && (
-                                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+                                <span className="ml-auto w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400 animate-pulse" />
                             )}
                         </Link>
                     );
@@ -79,12 +79,11 @@ export default function Sidebar() {
             </nav>
 
             {/* Bottom */}
-            <div className="px-4 py-4 border-t border-white/5">
-                <p className="text-[11px] text-gray-600 text-center">
+            <div className="px-4 py-4 border-t border-gray-200 dark:border-white/5">
+                <p className="text-[11px] text-gray-400 dark:text-gray-600 text-center">
                     © {new Date().getFullYear()} Loja Virtual
                 </p>
             </div>
         </aside>
     );
 }
-

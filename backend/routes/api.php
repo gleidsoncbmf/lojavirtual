@@ -132,6 +132,7 @@ Route::prefix('admin')
         Route::put('/shipping/{id}', [AdminShippingController::class, 'update']);
         Route::delete('/shipping/{id}', [AdminShippingController::class, 'destroy']);
         Route::put('/settings/shipping-zip', [AdminShippingController::class, 'updateStoreZip']);
+        Route::put('/settings/correios', [AdminShippingController::class, 'updateCorreiosCredentials']);
     });
 
 // ========================================================================

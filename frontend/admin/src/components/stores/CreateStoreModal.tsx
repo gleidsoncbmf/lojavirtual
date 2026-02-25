@@ -83,21 +83,21 @@ export default function CreateStoreModal({ open, onClose, onCreated }: Props) {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
-            <div className="relative w-full max-w-lg mx-4 bg-[#0f111a] border border-white/10 rounded-2xl shadow-2xl animate-in">
+            <div className="relative w-full max-w-lg mx-4 bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl animate-in transition-colors duration-300">
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-white/5">
+                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-white/5">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-green-600 flex items-center justify-center">
                             <StoreIcon className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-bold text-white">Nova Loja</h2>
+                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">Nova Loja</h2>
                             <p className="text-xs text-gray-500">Preencha os dados da loja e do dono</p>
                         </div>
                     </div>
                     <button
                         onClick={onClose}
-                        className="text-gray-500 hover:text-white transition p-1"
+                        className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-white transition p-1"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -106,14 +106,14 @@ export default function CreateStoreModal({ open, onClose, onCreated }: Props) {
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="p-6 space-y-5">
                     {error && (
-                        <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl px-4 py-3">
+                        <div className="bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400 text-sm rounded-xl px-4 py-3">
                             {error}
                         </div>
                     )}
 
                     {/* Store Section */}
                     <div className="space-y-3">
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Dados da Loja</p>
+                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Dados da Loja</p>
 
                         <div className="grid grid-cols-2 gap-3">
                             <div>
@@ -154,8 +154,8 @@ export default function CreateStoreModal({ open, onClose, onCreated }: Props) {
                     </div>
 
                     {/* Owner Section */}
-                    <div className="space-y-3 pt-2 border-t border-white/5">
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider pt-2">Dono da Loja</p>
+                    <div className="space-y-3 pt-2 border-t border-gray-200 dark:border-white/5">
+                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider pt-2">Dono da Loja</p>
 
                         <div>
                             <label htmlFor="owner-name">Nome do Dono</label>
@@ -200,7 +200,7 @@ export default function CreateStoreModal({ open, onClose, onCreated }: Props) {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-sm hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-lg shadow-indigo-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="w-full py-2.5 rounded-xl bg-green-600 text-white font-semibold text-sm hover:bg-green-500 transition-all duration-200 shadow-lg shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                         {loading ? (
                             <>

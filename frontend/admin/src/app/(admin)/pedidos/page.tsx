@@ -46,7 +46,7 @@ export default function OrdersPage() {
     return (
         <div className="space-y-6 animate-in">
             <div>
-                <h1 className="text-2xl font-bold text-white">Pedidos</h1>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Pedidos</h1>
                 <p className="text-gray-500 text-sm mt-1">Acompanhe e gerencie os pedidos da sua loja</p>
             </div>
 
@@ -88,10 +88,10 @@ export default function OrdersPage() {
             </div>
 
             {/* Table */}
-            <div className="bg-[#0f111a] border border-white/5 rounded-2xl overflow-hidden">
+            <div className="bg-white dark:bg-[#0f111a] border border-gray-200 dark:border-white/5 rounded-2xl overflow-hidden transition-colors duration-300">
                 {loading ? (
                     <div className="flex items-center justify-center py-20">
-                        <Loader2 className="w-6 h-6 text-indigo-500 animate-spin" />
+                        <Loader2 className="w-6 h-6 text-green-600 dark:text-green-500 animate-spin" />
                     </div>
                 ) : !data || data.data.length === 0 ? (
                     <div className="text-center py-20 text-gray-500">
@@ -103,7 +103,7 @@ export default function OrdersPage() {
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="border-b border-white/5 text-gray-500 text-xs uppercase">
+                                    <tr className="border-b border-gray-200 dark:border-white/5 text-gray-500 text-xs uppercase">
                                         <th className="text-left px-5 py-3 font-medium">Pedido</th>
                                         <th className="text-left px-5 py-3 font-medium">Cliente</th>
                                         <th className="text-left px-5 py-3 font-medium">Total</th>
@@ -115,21 +115,21 @@ export default function OrdersPage() {
                                 </thead>
                                 <tbody>
                                     {data.data.map((order) => (
-                                        <tr key={order.id} className="border-b border-white/[0.03] hover:bg-white/[0.02] transition">
+                                        <tr key={order.id} className="border-b border-gray-100 dark:border-white/[0.03] hover:bg-gray-50 dark:hover:bg-white/[0.02] transition">
                                             <td className="px-5 py-3">
-                                                <Link href={`/pedidos/${order.id}`} className="text-indigo-400 hover:underline font-medium">
+                                                <Link href={`/pedidos/${order.id}`} className="text-green-600 dark:text-green-400 hover:underline font-medium">
                                                     #{order.order_number}
                                                 </Link>
                                             </td>
                                             <td className="px-5 py-3">
                                                 <div>
-                                                    <p className="text-white">{order.customer_name}</p>
+                                                    <p className="text-gray-900 dark:text-white">{order.customer_name}</p>
                                                     {order.customer_email && (
-                                                        <p className="text-gray-600 text-xs">{order.customer_email}</p>
+                                                        <p className="text-gray-400 dark:text-gray-600 text-xs">{order.customer_email}</p>
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="px-5 py-3 text-white font-medium">{formatCurrency(order.total)}</td>
+                                            <td className="px-5 py-3 text-gray-900 dark:text-white font-medium">{formatCurrency(order.total)}</td>
                                             <td className="px-5 py-3">
                                                 <span className={`px-2.5 py-1 rounded-lg text-xs font-medium ${paymentStatusColors[order.payment_status] || 'bg-gray-500/20 text-gray-400'}`}>
                                                     {paymentStatusLabels[order.payment_status] || order.payment_status}
@@ -140,7 +140,7 @@ export default function OrdersPage() {
                                                     {deliveryStatusLabels[order.delivery_status] || order.delivery_status}
                                                 </span>
                                             </td>
-                                            <td className="px-5 py-3 text-gray-400 capitalize">{order.payment_method}</td>
+                                            <td className="px-5 py-3 text-gray-600 dark:text-gray-400 capitalize">{order.payment_method}</td>
                                             <td className="px-5 py-3 text-gray-500 text-xs">{formatDate(order.created_at)}</td>
                                         </tr>
                                     ))}
@@ -149,7 +149,7 @@ export default function OrdersPage() {
                         </div>
 
                         {data.meta.last_page > 1 && (
-                            <div className="flex items-center justify-between px-5 py-4 border-t border-white/5">
+                            <div className="flex items-center justify-between px-5 py-4 border-t border-gray-200 dark:border-white/5">
                                 <span className="text-gray-500 text-sm">
                                     {data.meta.total} pedido(s) • Página {data.meta.current_page} de {data.meta.last_page}
                                 </span>
@@ -157,14 +157,14 @@ export default function OrdersPage() {
                                     <button
                                         onClick={() => setPage(page - 1)}
                                         disabled={page <= 1}
-                                        className="px-3 py-1.5 rounded-lg text-sm text-gray-400 hover:bg-white/5 disabled:opacity-30 transition"
+                                        className="px-3 py-1.5 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 disabled:opacity-30 transition"
                                     >
                                         Anterior
                                     </button>
                                     <button
                                         onClick={() => setPage(page + 1)}
                                         disabled={page >= data.meta.last_page}
-                                        className="px-3 py-1.5 rounded-lg text-sm text-gray-400 hover:bg-white/5 disabled:opacity-30 transition"
+                                        className="px-3 py-1.5 rounded-lg text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5 disabled:opacity-30 transition"
                                     >
                                         Próxima
                                     </button>

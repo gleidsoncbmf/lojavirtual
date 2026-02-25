@@ -50,6 +50,9 @@ class ShippingService
                 $dimensions['length'],
                 $dimensions['width'],
                 $dimensions['height'],
+                $store->correios_user,
+                $store->correios_password,
+                $store->correios_cartao_postagem,
             );
 
             foreach ($correiosOptions as $correiosOption) {
@@ -216,6 +219,9 @@ class ShippingService
                 $dimensions['length'],
                 $dimensions['width'],
                 $dimensions['height'],
+                $store->correios_user,
+                $store->correios_password,
+                $store->correios_cartao_postagem,
             );
 
             foreach ($correiosOptions as $option) {
