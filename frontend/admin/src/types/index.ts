@@ -148,6 +148,10 @@ export interface Product {
     stock: number;
     active: boolean;
     images: string[];
+    weight?: number | null;
+    length?: number | null;
+    width?: number | null;
+    height?: number | null;
     category_id: number | null;
     category?: Category | null;
     variations?: ProductVariation[];
@@ -161,6 +165,10 @@ export interface ProductVariation {
     stock: number;
     sku: string;
     image: string | null;
+    weight?: number | null;
+    length?: number | null;
+    width?: number | null;
+    height?: number | null;
 }
 
 export interface ProductFormData {
@@ -174,7 +182,24 @@ export interface ProductFormData {
     active: boolean;
     category_id: number | null;
     images: string[];
+    weight?: number | null;
+    length?: number | null;
+    width?: number | null;
+    height?: number | null;
     variations?: ProductVariation[];
+}
+
+// ============================
+// Shipping
+// ============================
+export interface ShippingOption {
+    id: number;
+    name: string;
+    city: string | null;
+    state: string | null;
+    price: number;
+    delivery_days: number | null;
+    active: boolean;
 }
 
 // ============================

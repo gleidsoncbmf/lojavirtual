@@ -18,6 +18,7 @@ import type {
     DeliveryStatus,
     PlatformStore,
     CreateStoreFormData,
+    ShippingOption,
 } from '@/types';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -244,6 +245,32 @@ export async function updateWhatsApp(whatsapp: string): Promise<void> {
 
 export async function updateDomain(domain: string): Promise<void> {
     await api.put('/admin/settings/domain', { domain });
+}
+
+// ============================
+// Shipping
+// ============================
+export async function getShippingOptions(): Promise<{ data: ShippingOption[]; shipping_zip: string | null }> {
+    const { data } = await api.get<{ data: ShippingOption[]; shipping_zip: string | null }>('/admin/shipping');
+    return data;
+}
+
+export async function createShippingOption(optionData: Omit<ShippingOption, 'id'>): Promise<ShippingOption> {
+    const { data } = await api.post<{ data: ShippingOption }>('/admin/shipping', optionData);
+    return data.data;
+}
+
+export async function updateShippingOption(id: number, optionData: Partial<ShippingOption>): Promise<ShippingOption> {
+    const { data } = await api.put<{ data: ShippingOption }>(`/admin/shipping/${id}`, optionData);
+    return data.data;
+}
+
+export async function deleteShippingOption(id: number): Promise<void> {
+    await api.delete(`/admin/shipping/${id}`);
+}
+
+export async function updateShippingZip(shipping_zip: string): Promise<void> {
+    await api.put('/admin/settings/shipping-zip', { shipping_zip });
 }
 
 // ============================

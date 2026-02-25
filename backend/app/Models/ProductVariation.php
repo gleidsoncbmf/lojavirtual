@@ -17,12 +17,20 @@ class ProductVariation extends Model
         'stock',
         'sku',
         'image',
+        'weight',
+        'length',
+        'width',
+        'height',
     ];
 
     protected function casts(): array
     {
         return [
             'price' => 'decimal:2',
+            'weight' => 'decimal:2',
+            'length' => 'decimal:2',
+            'width' => 'decimal:2',
+            'height' => 'decimal:2',
         ];
     }
 

@@ -90,8 +90,8 @@ export default function ProductVariations({ variations, onChange }: ProductVaria
                         type="button"
                         onClick={() => handleTypeChange(type)}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${selectedType === type
-                                ? 'bg-indigo-600 text-white'
-                                : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                            ? 'bg-indigo-600 text-white'
+                            : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                             }`}
                     >
                         {VARIATION_LABELS[type]}
@@ -109,8 +109,8 @@ export default function ProductVariations({ variations, onChange }: ProductVaria
                             type="button"
                             onClick={() => toggleVariation(size)}
                             className={`flex items-center justify-center p-2 rounded-lg text-sm font-medium border transition-all ${isSelected
-                                    ? 'bg-indigo-600/20 border-indigo-500/50 text-indigo-400'
-                                    : 'bg-white/5 border-transparent text-gray-400 hover:border-white/10'
+                                ? 'bg-indigo-600/20 border-indigo-500/50 text-indigo-400'
+                                : 'bg-white/5 border-transparent text-gray-400 hover:border-white/10'
                                 }`}
                         >
                             {size}
@@ -200,6 +200,61 @@ export default function ProductVariations({ variations, onChange }: ProductVaria
                                             onChange={(e) => updateVariation(variation.name, 'sku', e.target.value)}
                                             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500/50 transition-colors"
                                         />
+                                    </div>
+                                </div>
+
+                                {/* Weight & Dimensions per variation */}
+                                <div className="mt-3">
+                                    <p className="text-xs font-medium text-gray-500 mb-2">📦 Peso e Dimensões</p>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                        <div>
+                                            <label className="block text-xs text-gray-500 mb-1">Peso (g)</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                min="0"
+                                                value={variation.weight || ''}
+                                                onChange={(e) => updateVariation(variation.name, 'weight', e.target.value ? parseFloat(e.target.value) : null)}
+                                                placeholder="300"
+                                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500/50 transition-colors"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs text-gray-500 mb-1">Comp. (cm)</label>
+                                            <input
+                                                type="number"
+                                                step="0.1"
+                                                min="0"
+                                                value={variation.length || ''}
+                                                onChange={(e) => updateVariation(variation.name, 'length', e.target.value ? parseFloat(e.target.value) : null)}
+                                                placeholder="20"
+                                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500/50 transition-colors"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs text-gray-500 mb-1">Larg. (cm)</label>
+                                            <input
+                                                type="number"
+                                                step="0.1"
+                                                min="0"
+                                                value={variation.width || ''}
+                                                onChange={(e) => updateVariation(variation.name, 'width', e.target.value ? parseFloat(e.target.value) : null)}
+                                                placeholder="15"
+                                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500/50 transition-colors"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs text-gray-500 mb-1">Alt. (cm)</label>
+                                            <input
+                                                type="number"
+                                                step="0.1"
+                                                min="0"
+                                                value={variation.height || ''}
+                                                onChange={(e) => updateVariation(variation.name, 'height', e.target.value ? parseFloat(e.target.value) : null)}
+                                                placeholder="5"
+                                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500/50 transition-colors"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 

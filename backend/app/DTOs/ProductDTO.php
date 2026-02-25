@@ -15,6 +15,10 @@ class ProductDTO
         public readonly bool $active,
         public readonly ?int $categoryId,
         public readonly ?array $images,
+        public readonly ?float $weight = null,
+        public readonly ?float $length = null,
+        public readonly ?float $width = null,
+        public readonly ?float $height = null,
         public readonly ?array $variations = [],
     ) {
     }
@@ -32,6 +36,10 @@ class ProductDTO
             active: (bool) ($data['active'] ?? true),
             categoryId: $data['category_id'] ?? null,
             images: $data['images'] ?? null,
+            weight: isset($data['weight']) ? (float) $data['weight'] : null,
+            length: isset($data['length']) ? (float) $data['length'] : null,
+            width: isset($data['width']) ? (float) $data['width'] : null,
+            height: isset($data['height']) ? (float) $data['height'] : null,
             variations: $data['variations'] ?? [],
         );
     }
@@ -49,7 +57,12 @@ class ProductDTO
             'active' => $this->active,
             'category_id' => $this->categoryId,
             'images' => $this->images,
+            'weight' => $this->weight,
+            'length' => $this->length,
+            'width' => $this->width,
+            'height' => $this->height,
             'variations' => $this->variations,
         ];
     }
 }
+

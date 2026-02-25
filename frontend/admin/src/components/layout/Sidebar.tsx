@@ -10,6 +10,7 @@ import {
     Settings,
     Store,
     Building2,
+    Truck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
@@ -19,6 +20,7 @@ const navItems = [
     { href: '/produtos', icon: Package, label: 'Produtos' },
     { href: '/categorias', icon: FolderOpen, label: 'Categorias' },
     { href: '/pedidos', icon: ShoppingCart, label: 'Pedidos' },
+    { href: '/envio', icon: Truck, label: 'Envios' },
     { href: '/configuracoes', icon: Settings, label: 'Configurações' },
 ];
 

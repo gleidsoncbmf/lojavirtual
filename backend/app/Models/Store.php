@@ -19,6 +19,7 @@ class Store extends Model
         'logo_url',
         'banner_url',
         'banner_position',
+        'shipping_zip',
         'payment_config',
         'status',
     ];
@@ -68,6 +69,11 @@ class Store extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function shippingOptions(): HasMany
+    {
+        return $this->hasMany(ShippingOption::class);
     }
 
     public function primaryDomain(): HasOne

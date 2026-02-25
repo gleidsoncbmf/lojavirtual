@@ -43,6 +43,10 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                     category_id: product.category_id,
                     images: product.images || [],
                     variations: product.variations || [],
+                    weight: product.weight ?? null,
+                    length: product.length ?? null,
+                    width: product.width ?? null,
+                    height: product.height ?? null,
                 });
                 setCategories(cats);
             })
@@ -121,10 +125,13 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                         <input id="sku" name="sku" type="text" value={form.sku || ''} onChange={handleChange} />
                     </div>
 
-                    <div>
-                        <label htmlFor="stock">Estoque</label>
-                        <input id="stock" name="stock" type="number" min="0" value={form.stock || 0} onChange={handleChange} />
-                    </div>
+                    {/* Hide product-level stock when variations have their own stock */}
+                    {(!form.variations || form.variations.length === 0 || !form.variations.some(v => (v.stock ?? 0) > 0)) && (
+                        <div>
+                            <label htmlFor="stock">Estoque</label>
+                            <input id="stock" name="stock" type="number" min="0" value={form.stock || 0} onChange={handleChange} />
+                        </div>
+                    )}
 
                     <div>
                         <label htmlFor="category_id">Categoria</label>
@@ -154,6 +161,29 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
                             images={form.images || []}
                             onChange={(imgs) => setForm((prev) => ({ ...prev, images: imgs }))}
                         />
+                    </div>
+
+                    {/* Weight & Dimensions — always shown for shipping calculation */}
+                    <div className="md:col-span-2 border-t border-white/5 pt-5">
+                        <h3 className="text-sm font-semibold text-gray-300 mb-3">📦 Peso e Dimensões (para cálculo de frete)</h3>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <label htmlFor="weight">Peso (g)</label>
+                                <input id="weight" name="weight" type="number" step="0.01" min="0" value={form.weight || ''} onChange={handleChange} placeholder="300" />
+                            </div>
+                            <div>
+                                <label htmlFor="length">Comprimento (cm)</label>
+                                <input id="length" name="length" type="number" step="0.1" min="0" value={form.length || ''} onChange={handleChange} placeholder="20" />
+                            </div>
+                            <div>
+                                <label htmlFor="width">Largura (cm)</label>
+                                <input id="width" name="width" type="number" step="0.1" min="0" value={form.width || ''} onChange={handleChange} placeholder="15" />
+                            </div>
+                            <div>
+                                <label htmlFor="height">Altura (cm)</label>
+                                <input id="height" name="height" type="number" step="0.1" min="0" value={form.height || ''} onChange={handleChange} placeholder="5" />
+                            </div>
+                        </div>
                     </div>
 
                     <div className="md:col-span-2 border-t border-white/5 pt-5">

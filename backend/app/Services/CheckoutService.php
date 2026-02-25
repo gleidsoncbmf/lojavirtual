@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Store;
+use App\Services\ShippingService;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutService
@@ -17,6 +18,7 @@ class CheckoutService
         private CartService $cartService,
         private OrderService $orderService,
         private WhatsAppService $whatsAppService,
+        private ShippingService $shippingService,
     ) {
     }
 
@@ -32,10 +34,42 @@ class CheckoutService
             // Validate stock
             foreach ($cart->items as $item) {
                 $product = $item->product;
-                if ($product->stock < $item->quantity) {
-                    throw new \InvalidArgumentException(
-                        "Estoque insuficiente para {$product->name}. Disponível: {$product->stock}"
+                $variation = $item->variation;
+
+                // If the item has a variation with stock tracking, check variation stock
+                if ($variation && $variation->stock > 0) {
+                    if ($variation->stock < $item->quantity) {
+                        throw new \InvalidArgumentException(
+                            "Estoque insuficiente para {$product->name} ({$variation->name}). Disponível: {$variation->stock}"
+                        );
+                    }
+                } else {
+                    // Fallback to product stock
+                    if ($product->stock < $item->quantity) {
+                        throw new \InvalidArgumentException(
+                            "Estoque insuficiente para {$product->name}. Disponível: {$product->stock}"
+                        );
+                    }
+                }
+            }
+
+            // Resolve shipping cost
+            $shippingCost = 0;
+            $shippingMethod = null;
+
+            if ($checkout->shippingOptionId || $checkout->shippingService) {
+                $destinationZip = $checkout->shippingAddress['zip'] ?? null;
+
+                if ($destinationZip) {
+                    $shipping = $this->shippingService->resolveSelectedOption(
+                        $store,
+                        $destinationZip,
+                        $cart->items,
+                        $checkout->shippingOptionId,
+                        $checkout->shippingService,
                     );
+                    $shippingCost = $shipping['cost'];
+                    $shippingMethod = $shipping['method'];
                 }
             }
 
@@ -48,8 +82,9 @@ class CheckoutService
                 'customer_phone' => $checkout->customerPhone,
                 'shipping_address' => $checkout->shippingAddress,
                 'subtotal' => $cart->subtotal,
-                'shipping_cost' => 0,
-                'total' => $cart->subtotal,
+                'shipping_cost' => $shippingCost,
+                'shipping_method' => $shippingMethod,
+                'total' => $cart->subtotal + $shippingCost,
                 'payment_method' => $checkout->paymentMethod,
                 'payment_status' => 'pending',
                 'delivery_status' => 'pending',
@@ -75,7 +110,12 @@ class CheckoutService
                     'total' => $item->unit_price * $item->quantity,
                 ]);
 
-                $item->product->decrementStock($item->quantity);
+                // Decrement variation stock if applicable, otherwise product stock
+                if ($item->variation && $item->variation->stock > 0) {
+                    $item->variation->decrement('stock', $item->quantity);
+                } else {
+                    $item->product->decrementStock($item->quantity);
+                }
             }
 
             // Clear cart

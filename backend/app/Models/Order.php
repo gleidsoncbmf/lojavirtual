@@ -21,6 +21,7 @@ class Order extends Model
         'shipping_address',
         'subtotal',
         'shipping_cost',
+        'shipping_method',
         'total',
         'payment_status',
         'delivery_status',

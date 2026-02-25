@@ -37,6 +37,8 @@ class CheckoutController extends Controller
             'payment_method' => 'required|string|in:stripe,mercadopago,whatsapp',
             'session_id' => 'nullable|string',
             'notes' => 'nullable|string',
+            'shipping_option_id' => 'nullable|integer|exists:shipping_options,id',
+            'shipping_service' => 'nullable|string',
         ]);
 
         $store = $request->get('store');

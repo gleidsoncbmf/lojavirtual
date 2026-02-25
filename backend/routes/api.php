@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentWebhookController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ShippingCalculatorController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\ThemeController;
 use App\Http\Controllers\Api\Admin\CategoryController as AdminCategoryController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Api\Admin\ImageUploadController;
 use App\Http\Controllers\Api\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Api\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\Admin\SettingsController;
+use App\Http\Controllers\Api\Admin\ShippingController as AdminShippingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,6 +72,9 @@ Route::middleware('tenant')->group(function () {
 
     // Order status (public)
     Route::get('/orders/{orderNumber}/status', [OrderController::class, 'status']);
+
+    // Shipping calculator (public)
+    Route::post('/shipping/calculate', [ShippingCalculatorController::class, 'calculate']);
 });
 
 // ========================================================================
@@ -120,6 +125,13 @@ Route::prefix('admin')
         Route::put('/settings/payment', [SettingsController::class, 'updatePaymentConfig']);
         Route::put('/settings/whatsapp', [SettingsController::class, 'updateWhatsApp']);
         Route::put('/settings/domain', [SettingsController::class, 'updateDomain']);
+
+        // Shipping options CRUD
+        Route::get('/shipping', [AdminShippingController::class, 'index']);
+        Route::post('/shipping', [AdminShippingController::class, 'store']);
+        Route::put('/shipping/{id}', [AdminShippingController::class, 'update']);
+        Route::delete('/shipping/{id}', [AdminShippingController::class, 'destroy']);
+        Route::put('/settings/shipping-zip', [AdminShippingController::class, 'updateStoreZip']);
     });
 
 // ========================================================================

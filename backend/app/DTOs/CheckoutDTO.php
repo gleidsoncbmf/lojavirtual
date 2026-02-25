@@ -11,6 +11,8 @@ class CheckoutDTO
         public readonly ?array $shippingAddress,
         public readonly string $paymentMethod,
         public readonly ?string $notes,
+        public readonly ?int $shippingOptionId = null,
+        public readonly ?string $shippingService = null,
     ) {
     }
 
@@ -23,6 +25,8 @@ class CheckoutDTO
             shippingAddress: $data['shipping_address'] ?? null,
             paymentMethod: $data['payment_method'],
             notes: $data['notes'] ?? null,
+            shippingOptionId: $data['shipping_option_id'] ?? null,
+            shippingService: $data['shipping_service'] ?? null,
         );
     }
 
@@ -35,6 +39,9 @@ class CheckoutDTO
             'shipping_address' => $this->shippingAddress,
             'payment_method' => $this->paymentMethod,
             'notes' => $this->notes,
+            'shipping_option_id' => $this->shippingOptionId,
+            'shipping_service' => $this->shippingService,
         ];
     }
 }
+

@@ -23,6 +23,10 @@ class Product extends Model
         'stock',
         'active',
         'images',
+        'weight',
+        'length',
+        'width',
+        'height',
     ];
 
     protected function casts(): array
@@ -32,6 +36,10 @@ class Product extends Model
             'compare_price' => 'decimal:2',
             'active' => 'boolean',
             'images' => 'array',
+            'weight' => 'decimal:2',
+            'length' => 'decimal:2',
+            'width' => 'decimal:2',
+            'height' => 'decimal:2',
         ];
     }
 

@@ -49,12 +49,20 @@ class ProductController extends Controller
             'category_id' => 'nullable|exists:categories,id',
             'images' => 'nullable|array',
             'images.*' => 'string',
+            'weight' => 'nullable|numeric|min:0',
+            'length' => 'nullable|numeric|min:0',
+            'width' => 'nullable|numeric|min:0',
+            'height' => 'nullable|numeric|min:0',
             'variations' => 'nullable|array',
             'variations.*.name' => 'required_with:variations|string',
             'variations.*.price' => 'nullable|numeric|min:0',
             'variations.*.stock' => 'integer|min:0',
             'variations.*.sku' => 'nullable|string',
             'variations.*.image' => 'nullable|string',
+            'variations.*.weight' => 'nullable|numeric|min:0',
+            'variations.*.length' => 'nullable|numeric|min:0',
+            'variations.*.width' => 'nullable|numeric|min:0',
+            'variations.*.height' => 'nullable|numeric|min:0',
         ]);
 
         if (empty($validated['slug'])) {
@@ -110,6 +118,14 @@ class ProductController extends Controller
             'variations.*.stock' => 'integer|min:0',
             'variations.*.sku' => 'nullable|string',
             'variations.*.image' => 'nullable|string',
+            'variations.*.weight' => 'nullable|numeric|min:0',
+            'variations.*.length' => 'nullable|numeric|min:0',
+            'variations.*.width' => 'nullable|numeric|min:0',
+            'variations.*.height' => 'nullable|numeric|min:0',
+            'weight' => 'nullable|numeric|min:0',
+            'length' => 'nullable|numeric|min:0',
+            'width' => 'nullable|numeric|min:0',
+            'height' => 'nullable|numeric|min:0',
         ]);
 
         $dto = ProductDTO::fromRequest(array_merge($product->toArray(), $validated));
